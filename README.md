@@ -99,7 +99,7 @@ All original credit goes to [obsrv.org](https://www.obsrv.org/) team, the follow
     ```
 - Enable the new created service with `systemctl enable apache.service`
 - And start it with `systemctl start apache`
-- Check in you brownser with `http://127.0.0.1` (replace with your IP)
+- Check in you browser with `http://127.0.0.1` (replace with your IP)
 - If show `Its works!` it means that all fine for now
 
 ## Setting up DNS
