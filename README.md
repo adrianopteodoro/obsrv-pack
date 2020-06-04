@@ -1,6 +1,7 @@
 # Biohazard Outbreak File #1 and #2 Private Server
 
 All original credit goes to [obsrv.org](https://www.obsrv.org/) team, the following content is a simplification from guide taken from [gh0stline GitLab](https://gitlab.com/gh0stl1ne)
+Official thread about this on [obsrv.org forum](http://www.obsrv.org/viewtopic.php?f=10&t=5251)
 
 ## Requirements
 
