@@ -1,11 +1,14 @@
 # Biohazard Outbreak File #1 and #2 Private Server
 
+All original credit goes to [obsrv.org](https://www.obsrv.org/) team, the following content is a simplification from guide taken from [gh0stline GitLab](https://gitlab.com/gh0stl1ne)
+
 ## Requirements
 
 - Linux based system (This guide uses Debian)
 - Custom build of Apache HTTP Server
 - Custon build of OpenSSl with weak cipher (Apache Build Prereq)
 - DNAS Emulation uses old protocol HTTP/1.0
+- Install VIM for file edit or use nano if you prefer (Debian: `apt install vim`)
 
 ## Setting up weak ciphers
 
@@ -237,6 +240,7 @@
 - Copy content from `www` with `cp www/* /var/www/bhof1`
 - Set permissions with `chown -R www-data:www-data /var/www/bhof1`
 - Create symlink for DNAS folder `ln -s /var/www/bhof1 /var/www/dnas/00000002`
+- Edit with `vi /var/www/bhof1/db_cred.php` the `$pass` param with `bioserver` mysql user password
 - Restore database with `mysql -u root < database/bioserver.sql`
 - Edit `config.properties` and edit the following:
     ```config
@@ -260,6 +264,7 @@
 - Copy content from `www` with `cp www/* /var/www/bhof2`
 - Set permissions with `chown -R www-data:www-data /var/www/bhof2`
 - Create symlink for DNAS folder `ln -s /var/www/bhof2 /var/www/dnas/00000010`
+- Edit with `vi /var/www/bhof2/db_cred.php` the `$pass` param with `bioserver` mysql user password
 - Restore database with `mysql -u root < database/bioserver.sql`
 - Edit `config.properties` and edit the following:
     ```config
