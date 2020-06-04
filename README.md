@@ -109,7 +109,7 @@ Official thread about this on [obsrv.org forum](http://www.obsrv.org/viewtopic.p
 
 - Install dnsmasq and dnsutils with `apt update && apt install dnsmasq dnsutils`
 - Execute `mv /etc/dnsmasq.conf /etc/dnsmasq.conf.backup`
-- Execeute `vi /etc/dnsmasq.conf` and add following:
+- Execute `vi /etc/dnsmasq.conf` and add following:
     ```conf
     # Replace XXX.XXX.XXX.XXX with your machine IP Address
     address=/gate1.jp.dnas.playstation.org/XXX.XXX.XXX.XXX
@@ -118,6 +118,12 @@ Official thread about this on [obsrv.org forum](http://www.obsrv.org/viewtopic.p
     server=1.1.1.1
     interface=eth0
     listen-address=::1,127.0.0.1,XXX.XXX.XXX.XXX
+    ```
+- Edit with `vi /etc/hosts` and add the following lines (replace XXX.XXX.XXX.XXX your IP)
+    ```
+    127.0.0.1       dnsmasq
+    127.0.1.1       dnsmasq
+    XXX.XXX.XXX.XXX  dnsmasq
     ```
 - Restart dnsmasq with `systemctl restart dnsmasq`
 
@@ -174,7 +180,7 @@ Official thread about this on [obsrv.org forum](http://www.obsrv.org/viewtopic.p
 
     </IfModule>
     ```
-- Add the following to the end on file:
+- Add the following to the end on file (replace XXX.XXX.XXX.XXX your IP):
     ```conf
     <IfModule ssl_module>
         # Replace XXX.XXX.XXX.XXX with your machine IP Address
