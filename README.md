@@ -235,6 +235,8 @@ Official thread about this on [obsrv.org forum](http://www.obsrv.org/viewtopic.p
     CREATE USER 'bioserver'@'%' IDENTIFIED BY 'xxxSECUREPASSWORDxxx';
     exit
     ```
+- Download mysql Connector/J with `wget https://cdn.mysql.com//Downloads/Connector-J/mysql-connector-java-5.1.49.tar.gz -O ~/mysql-connector-java-5.1.49.tar.gz`
+
 
 ### Setup Outbreak File 1
 
@@ -256,6 +258,10 @@ Official thread about this on [obsrv.org forum](http://www.obsrv.org/viewtopic.p
     db_user=bioserver
     db_password=xxxSECUREPASSWORDxxx
     ```
+- Create a lib folder with `mkdir lib`
+- Extract the mysql connector jar with `tar -zxf ~/mysql-connector-java-5.1.49.tar.gz mysql-connector-java-5.1.49/mysql-connector-java-5.1.49.jar`
+- Move jar file to lib folder with `mv mysql-connector-java-5.1.49/mysql-connector-java-5.1.49.jar lib/`
+- Remove empty folder with `rmdir mysql-connector-java-5.1.49/`
 - Execute `chmod +x observice.sh` to make script to be a executable
 - Build server with `./observice.sh build`
 - Start with `./observice.sh start`
@@ -280,6 +286,17 @@ Official thread about this on [obsrv.org forum](http://www.obsrv.org/viewtopic.p
     db_user=bioserver
     db_password=xxxSECUREPASSWORDxxx
     ```
+- Create a lib folder with `mkdir lib`
+- Extract the mysql connector jar with `tar -zxf ~/mysql-connector-java-5.1.49.tar.gz mysql-connector-java-5.1.49/mysql-connector-java-5.1.49.jar`
+- Move jar file to lib folder with `mv mysql-connector-java-5.1.49/mysql-connector-java-5.1.49.jar lib/`
+- Remove empty folder with `rmdir mysql-connector-java-5.1.49/`
 - Execute `chmod +x observice.sh` to make script to be a executable
 - Build server with `./observice.sh build`
 - Start with `./observice.sh start`
+
+### Test with your game
+
+- You will need a Outbreak File 1 or File 2 Japan version
+- You will need network file set to use your DNS (For network setup on PS is better to use another game that has built-in network setup or use a `Network Adaptor Start-Up Disc` to do that)
+- For emulator you need to use [CLR_DEV9 plugin](https://github.com/TheLastRar/CLR-DEV9) to use with [PCSX2](https://pcsx2.net/)
+- Youtube has several guides about that piece at end only only need is just swap the DNS address to use your own
