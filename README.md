@@ -10,6 +10,8 @@ Official thread about this on [obsrv.org forum](http://www.obsrv.org/viewtopic.p
 - Custon build of OpenSSl with weak cipher (Apache Build Prereq)
 - DNAS Emulation uses old protocol HTTP/1.0
 - Install VIM for file edit or use nano if you prefer (Debian: `apt install vim`)
+- Install screen for observice.sh script usage (Debian: `apt install screen`)
+- Install git for repo clone (Debian: `apt install git`)
 
 ## Setting up weak ciphers
 
