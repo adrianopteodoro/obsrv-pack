@@ -25,6 +25,7 @@ Official thread about this on [obsrv.org forum](http://www.obsrv.org/viewtopic.p
 - Install on system `sudo make install` or just `make install`
 - Test if have the needed cipher with `/opt/openssl-1.0.2/bin/openssl ciphers -V 'ALL' | grep 0x13`
     Expected result:
+
     ```text
     0xC0,0x13 - ECDHE-RSA-AES128-SHA    SSLv3 Kx=ECDH     Au=RSA  Enc=AES(128)  Mac=SHA1
     0x00,0x13 - EDH-DSS-DES-CBC3-SHA    SSLv3 Kx=DH       Au=DSS  Enc=3DES(168) Mac=SHA1
@@ -33,10 +34,12 @@ Official thread about this on [obsrv.org forum](http://www.obsrv.org/viewtopic.p
 ### Compiling Apache 2
 
 - Need to setup the OpenSSL lib to be used with Apache, so edit the ld file with this command `vi /etc/ld.so.conf.d/$(uname -m)-linux-gnu.conf` or `nano /etc/ld.so.conf.d/$(uname -m)-linux-gnu.conf` and add the following lines at the end and after execute the `ldconfig`
+
     ```conf
     # custom OpenSSL
     /opt/openssl-1.0.2/lib
     ```
+
 - Use apt to install some prereqs `apt update && apt install libpcre3 libpcre3-dev libexpat1 libexpat1-dev libxml2 libxml2-dev libxslt1-dev libxslt1`
 - Download Apache 2 `cd && wget http://mirror.nbtelecom.com.br/apache//httpd/httpd-2.4.43.tar.gz`
 - Download Apache Apr `wget http://ftp.unicamp.br/pub/apache//apr/apr-1.7.0.tar.gz`
@@ -51,6 +54,7 @@ Official thread about this on [obsrv.org forum](http://www.obsrv.org/viewtopic.p
 - Execute make configure script with `./configure --prefix=/opt/apache --with-included-apr --with-ssl=/opt/openssl-1.0.2 --enable-ssl`
 - Build with `make` and after just install with `make install`
 - Execute `vi /opt/apache/bin/envvars` and add the line with OpenSSL lib line with the following:
+
     ```bash
     # Licensed to the Apache Software Foundation (ASF) under one or more
     # contributor license agreements.  See the NOTICE file distributed with
@@ -82,7 +86,9 @@ Official thread about this on [obsrv.org forum](http://www.obsrv.org/viewtopic.p
     export LD_LIBRARY_PATH
     #
     ```
+
 - Create a systemd service for apache server with `vi /etc/systemd/system/apache.service` and add the following:
+
     ```ini
     [Unit]
     Description=Apache Server for Outbreak
@@ -100,6 +106,7 @@ Official thread about this on [obsrv.org forum](http://www.obsrv.org/viewtopic.p
     [Install]
     WantedBy=multi-user.target
     ```
+
 - Enable the new created service with `systemctl enable apache.service`
 - And start it with `systemctl start apache`
 - Check in you browser with `http://127.0.0.1` (replace with your IP)
@@ -110,6 +117,7 @@ Official thread about this on [obsrv.org forum](http://www.obsrv.org/viewtopic.p
 - Install dnsmasq and dnsutils with `apt update && apt install dnsmasq dnsutils`
 - Execute `mv /etc/dnsmasq.conf /etc/dnsmasq.conf.backup`
 - Execute `vi /etc/dnsmasq.conf` and add following:
+
     ```conf
     # Replace XXX.XXX.XXX.XXX with your machine IP Address
     address=/gate1.jp.dnas.playstation.org/XXX.XXX.XXX.XXX
@@ -119,12 +127,15 @@ Official thread about this on [obsrv.org forum](http://www.obsrv.org/viewtopic.p
     interface=eth0
     listen-address=::1,127.0.0.1,XXX.XXX.XXX.XXX
     ```
+
 - Edit with `vi /etc/hosts` and add the following lines (replace XXX.XXX.XXX.XXX your IP)
-    ```
+
+    ```text
     127.0.0.1       dnsmasq
     127.0.1.1       dnsmasq
     XXX.XXX.XXX.XXX  dnsmasq
     ```
+
 - Restart dnsmasq with `systemctl restart dnsmasq`
 
 ## Cloning this Repo
@@ -142,13 +153,16 @@ Official thread about this on [obsrv.org forum](http://www.obsrv.org/viewtopic.p
 - Now we need to setup Apache to execute PHP scripts, install with `apt update && apt install php7.0-fpm`
 - Edit apache config file with `vi /opt/apache/conf/httpd.conf`
 - Search and uncomment the following lines (look for each one because its not in sequence):
+
     ```conf
     #LoadModule proxy_module modules/mod_proxy.so
     #LoadModule proxy_fcgi_module modules/mod_proxy_fcgi.so
     #LoadModule ssl_module modules/mod_ssl.so
     #LoadModule rewrite_module modules/mod_rewrite.so
     ```
+
 - Replace this:
+
     ```conf
     <IfModule unixd_module>
     #
@@ -164,7 +178,9 @@ Official thread about this on [obsrv.org forum](http://www.obsrv.org/viewtopic.p
 
     </IfModule>
     ```
+
     With this:
+
     ```conf
     <IfModule unixd_module>
     #
@@ -180,7 +196,9 @@ Official thread about this on [obsrv.org forum](http://www.obsrv.org/viewtopic.p
 
     </IfModule>
     ```
+
 - Add the following to the end on file (replace XXX.XXX.XXX.XXX your IP):
+
     ```conf
     <IfModule ssl_module>
         # Replace XXX.XXX.XXX.XXX with your machine IP Address
@@ -230,6 +248,7 @@ Official thread about this on [obsrv.org forum](http://www.obsrv.org/viewtopic.p
         downgrade-1.0 force-response-1.0
     </IfModule>
     ```
+
 - Restart apache with `systemctl restart apache`
 - Test with `wget --no-check-certificate -O - https://gate1.jp.dnas.playstation.org/gai-gw/v2.5_i-connect` on other machine that its DNS setting is set to use from your server
 
@@ -237,12 +256,13 @@ Official thread about this on [obsrv.org forum](http://www.obsrv.org/viewtopic.p
 
 - Install prereqs with `apt update && apt install mariadb-server php7.0-mysql openjdk-8-jre-headless openjdk-8-jre openjdk-8-jdk-headless  openjdk-8-jdk`
 - Execute `mysql -u root` an use teh following query to create user (change the password):
+
     ```sql
     CREATE USER 'bioserver'@'%' IDENTIFIED BY 'xxxSECUREPASSWORDxxx';
     exit
     ```
-- Download mysql Connector/J with `wget https://cdn.mysql.com//Downloads/Connector-J/mysql-connector-java-5.1.49.tar.gz -O ~/mysql-connector-java-5.1.49.tar.gz`
 
+- Download mysql Connector/J with `wget https://cdn.mysql.com//Downloads/Connector-J/mysql-connector-java-5.1.49.tar.gz -O ~/mysql-connector-java-5.1.49.tar.gz`
 
 ### Setup Outbreak File 1
 
@@ -254,6 +274,7 @@ Official thread about this on [obsrv.org forum](http://www.obsrv.org/viewtopic.p
 - Edit with `vi /var/www/bhof1/db_cred.php` the `$pass` param with `bioserver` mysql user password
 - Restore database with `mysql -u root < database/bioserver.sql`
 - Edit `config.properties` and edit the following:
+
     ```config
     # Configuration for the server
 
@@ -264,6 +285,7 @@ Official thread about this on [obsrv.org forum](http://www.obsrv.org/viewtopic.p
     db_user=bioserver
     db_password=xxxSECUREPASSWORDxxx
     ```
+
 - Create a lib folder with `mkdir lib`
 - Extract the mysql connector jar with `tar -zxf ~/mysql-connector-java-5.1.49.tar.gz mysql-connector-java-5.1.49/mysql-connector-java-5.1.49.jar`
 - Move jar file to lib folder with `mv mysql-connector-java-5.1.49/mysql-connector-java-5.1.49.jar lib/`
@@ -282,6 +304,7 @@ Official thread about this on [obsrv.org forum](http://www.obsrv.org/viewtopic.p
 - Edit with `vi /var/www/bhof2/db_cred.php` the `$pass` param with `bioserver` mysql user password
 - Restore database with `mysql -u root < database/bioserver.sql`
 - Edit `config.properties` and edit the following:
+
     ```config
     # Configuration for the server
 
@@ -292,6 +315,7 @@ Official thread about this on [obsrv.org forum](http://www.obsrv.org/viewtopic.p
     db_user=bioserver
     db_password=xxxSECUREPASSWORDxxx
     ```
+
 - Create a lib folder with `mkdir lib`
 - Extract the mysql connector jar with `tar -zxf ~/mysql-connector-java-5.1.49.tar.gz mysql-connector-java-5.1.49/mysql-connector-java-5.1.49.jar`
 - Move jar file to lib folder with `mv mysql-connector-java-5.1.49/mysql-connector-java-5.1.49.jar lib/`
